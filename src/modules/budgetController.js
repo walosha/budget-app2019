@@ -27,6 +27,7 @@ const data = {
 export function addItem({ type, description, value }) {
   let ID, newItem;
 
+  //check and create and ID for budget type
   if (data.allItems[type].length) {
     ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
   } else {
@@ -38,7 +39,7 @@ export function addItem({ type, description, value }) {
   } else {
     newItem = new Expense(ID, description, value);
   }
-  console.log(data);
+
   data.allItems[type].push(newItem);
   return newItem;
 }
