@@ -5,7 +5,7 @@ export const DOMString = {
   inputBtn: ".add__btn"
 };
 
-export const getString = function() {
+export const getInput = function() {
   return {
     type: document.querySelector(DOMString.inputType).value,
     description: document.querySelector(DOMString.inputDescription).value,

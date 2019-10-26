@@ -26,11 +26,19 @@ const data = {
 
 export function addItem({ type, description, value }) {
   let ID, newItem;
-  ID = 0;
+
+  if (data.allItems[type].length) {
+    ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+  } else {
+    ID = 0;
+  }
+
   if (type === "inc") {
     newItem = new Income(ID, description, value);
   } else {
     newItem = new Expense(ID, description, value);
   }
+  console.log(data);
+  data.allItems[type].push(newItem);
   return newItem;
 }

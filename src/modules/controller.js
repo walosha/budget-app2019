@@ -1,4 +1,4 @@
-import { DOMString, getString } from "./uiController";
+import { DOMString, getInput } from "./uiController";
 import { addItem } from "./budgetController";
 
 export const setupEventListener = function() {
@@ -16,7 +16,7 @@ export const setupEventListener = function() {
 };
 
 function ctrlAddItems() {
-  const input = getString();
+  const input = getInput();
   const newItem = addItem(input);
   console.log(newItem);
 }
