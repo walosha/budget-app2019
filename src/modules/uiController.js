@@ -1,8 +1,12 @@
+import { func } from "prop-types";
+
 export const DOMString = {
   inputType: ".add__type",
   inputDescription: ".add__description",
   inputValue: ".add__value",
-  inputBtn: ".add__btn"
+  inputBtn: ".add__btn",
+  incomeContainer: ".income__list",
+  expensesContainer: ".expenses__list"
 };
 
 export const getInput = function() {
@@ -13,6 +17,7 @@ export const getInput = function() {
   };
 };
 
+//  Adding a New Item to the UI
 export const addListItem = function(obj, type) {
   let html, element;
   if (type === "inc") {
@@ -25,7 +30,7 @@ export const addListItem = function(obj, type) {
                                   </div>
                               </div>
                           </div>`;
-    element = ".income__list";
+    element = DOMString.incomeContainer;
   } else {
     html = `<div class="item clearfix" id="expense-${obj.id}">
                             <div class="item__description">${obj.description}</div>
@@ -38,8 +43,19 @@ export const addListItem = function(obj, type) {
                             </div>
                         </div>`;
 
-    element = ".expenses__list";
+    element = DOMString.expensesContainer;
   }
 
   document.querySelector(element).insertAdjacentHTML("afterbegin", html);
+};
+
+export const clearFields = function() {
+  const fields = document.querySelectorAll(
+    DOMString.inputDescription + "," + DOMString.inputValue
+  );
+  fields.forEach(field => {
+    field.value = "";
+  });
+  //setting focus on first input
+  fields[0].focus();
 };
