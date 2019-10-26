@@ -51,7 +51,6 @@ const calculateTotal = function(type) {
     (acc, cur) => acc + cur.value,
     0
   );
-  console.log(data.total[type]);
 };
 
 export const calculateBudget = function() {
@@ -70,4 +69,12 @@ export const calculateBudget = function() {
     percentage: data.percentage,
     budget: data.budget
   };
+};
+
+export const deleteItem = (type, id) => {
+  data.allItems[type] = data.allItems[type].filter(item => {
+    return item.id != id;
+  });
+
+  return data.allItems[type];
 };

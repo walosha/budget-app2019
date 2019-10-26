@@ -50,7 +50,7 @@ export const addListItem = function(obj, type) {
     element = DOMString.expensesContainer;
   }
 
-  document.querySelector(element).insertAdjacentHTML("afterbegin", html);
+  document.querySelector(element).insertAdjacentHTML("beforeend", html);
 };
 
 export const clearFields = function() {
@@ -75,4 +75,11 @@ export const displayBudgetUi = obj => {
     document.querySelector(DOMString.totalExpensesPerctage).textContent =
       obj.percentage;
   }
+};
+
+export const deleteItemUI = selectID => {
+  // Removing element from the DOM
+  document
+    .querySelector(`#${selectID}`)
+    .parentNode.removeChild(document.querySelector(`#${selectID}`));
 };

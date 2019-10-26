@@ -3,9 +3,10 @@ import {
   getInput,
   addListItem,
   clearFields,
-  displayBudgetUi
+  displayBudgetUi,
+  deleteItemUI
 } from "./uiController";
-import { addItem, calculateBudget } from "./budgetController";
+import { addItem, calculateBudget, deleteItem } from "./budgetController";
 
 export const setupEventListener = function() {
   document.addEventListener("keypress", function(e) {
@@ -36,6 +37,7 @@ export const setupEventListener = function() {
 const updateBudget = () => {
   //return total income,expenses,budget and percentage
   const budget = calculateBudget();
+
   displayBudgetUi(budget);
 };
 
@@ -60,17 +62,16 @@ function ctrlAddItems() {
 }
 
 const ctrlDeleteItem = event => {
-  const item = event.target.parentNode.parentNode.parentNode.parentNode.id.split(
-    "-"
-  );
+  const item = event.target.parentNode.parentNode.parentNode.parentNode.id;
 
   if (item) {
-    const [id, type] = item;
+    const [type, id] = item.split("-");
 
-    //Delete from data structure
-
-    //delete from UI
-
+    //Delete Item from data structure
+    deleteItem(type, id);
+    //delete Item  from UI
+    deleteItemUI(item);
     //Recalculate and show Budget
+    updateBudget();
   }
 };
