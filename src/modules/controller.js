@@ -1,5 +1,5 @@
 import { DOMString, getInput, addListItem, clearFields } from "./uiController";
-import { addItem } from "./budgetController";
+import { addItem, calculateBudget } from "./budgetController";
 
 export const setupEventListener = function() {
   document.addEventListener("keypress", function(e) {
@@ -15,6 +15,11 @@ export const setupEventListener = function() {
     });
 };
 
+const updateBudget = () => {
+  //return total income,expenses,budget and percentage
+  const budget = calculateBudget();
+  console.log(budget);
+};
 function ctrlAddItems() {
   // read Input from UI
   const input = getInput();
@@ -28,5 +33,9 @@ function ctrlAddItems() {
 
     //Clear input fields afetr reading it
     clearFields();
+
+    // update budget
+
+    updateBudget();
   }
 }
