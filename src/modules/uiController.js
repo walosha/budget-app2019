@@ -6,7 +6,11 @@ export const DOMString = {
   inputValue: ".add__value",
   inputBtn: ".add__btn",
   incomeContainer: ".income__list",
-  expensesContainer: ".expenses__list"
+  expensesContainer: ".expenses__list",
+  totalBudget: ".budget__value",
+  totalIncome: ".budget__income--value",
+  totalExpenses: ".budget__expenses--value",
+  totalExpensesPerctage: ".budget__expenses--percentage"
 };
 
 export const getInput = function() {
@@ -21,7 +25,7 @@ export const getInput = function() {
 export const addListItem = function(obj, type) {
   let html, element;
   if (type === "inc") {
-    html = `<div class="item clearfix" id="income-${obj.id}">
+    html = `<div class="item clearfix" id="inc-${obj.id}">
                               <div class="item__description">${obj.description}</div>
                               <div class="right clearfix">
                                   <div class="item__value">${obj.value}</div>
@@ -32,7 +36,7 @@ export const addListItem = function(obj, type) {
                           </div>`;
     element = DOMString.incomeContainer;
   } else {
-    html = `<div class="item clearfix" id="expense-${obj.id}">
+    html = `<div class="item clearfix" id="exp-${obj.id}">
                             <div class="item__description">${obj.description}</div>
                             <div class="right clearfix">
                                 <div class="item__value">-${obj.value}</div>
@@ -58,4 +62,17 @@ export const clearFields = function() {
   });
   //setting focus on first input
   fields[0].focus();
+};
+
+export const displayBudgetUi = obj => {
+  document.querySelector(DOMString.totalBudget).textContent = obj.budget;
+  document.querySelector(DOMString.totalIncome).textContent = obj.totalIncome;
+  document.querySelector(DOMString.totalExpenses).textContent =
+    obj.totalExpenses;
+  if (obj.percentage < 1) {
+    document.querySelector(DOMString.totalExpensesPerctage).textContent = "---";
+  } else {
+    document.querySelector(DOMString.totalExpensesPerctage).textContent =
+      obj.percentage;
+  }
 };
