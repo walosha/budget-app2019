@@ -16,8 +16,17 @@ export const setupEventListener = function() {
 };
 
 function ctrlAddItems() {
+  // read Input from UI
   const input = getInput();
-  const newItem = addItem(input);
-  addListItem(newItem, input.type);
-  clearFields();
+
+  if (input.value !== "" && !isNaN(input.value) && input.value > 0) {
+    // Store data into the model
+    const newItem = addItem(input);
+
+    // addItem to the UI && DOM
+    addListItem(newItem, input.type);
+
+    //Clear input fields afetr reading it
+    clearFields();
+  }
 }

@@ -13,7 +13,7 @@ export const getInput = function() {
   return {
     type: document.querySelector(DOMString.inputType).value,
     description: document.querySelector(DOMString.inputDescription).value,
-    value: document.querySelector(DOMString.inputValue).value
+    value: parseFloat(document.querySelector(DOMString.inputValue).value)
   };
 };
 
