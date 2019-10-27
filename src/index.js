@@ -1,5 +1,4 @@
-import constroller from "./modules/controller";
-import { setupEventListener } from "./modules/controller";
+import { setupEventListener } from "./modules/appController";
 import "./style.css";
 
 // Seting up Event Listener

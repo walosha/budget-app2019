@@ -4,9 +4,18 @@ import {
   addListItem,
   clearFields,
   displayBudgetUi,
-  deleteItemUI
+  deleteItemUI,
+  displayPercentage,
+  getDate,
+  changeType
 } from "./uiController";
-import { addItem, calculateBudget, deleteItem } from "./budgetController";
+import {
+  addItem,
+  calculateBudget,
+  deleteItem,
+  calculatePercentage,
+  getPercentage
+} from "./budgetController";
 
 export const setupEventListener = function() {
   document.addEventListener("keypress", function(e) {
@@ -30,6 +39,11 @@ export const setupEventListener = function() {
   });
 
   document
+    .querySelector(DOMString.inputType)
+    .addEventListener("change", changeType);
+  // display Dtae on the UI WHEN Application first start
+  getDate();
+  document
     .querySelector(".container")
     .addEventListener("click", ctrlDeleteItem);
 };
@@ -37,7 +51,6 @@ export const setupEventListener = function() {
 const updateBudget = () => {
   //return total income,expenses,budget and percentage
   const budget = calculateBudget();
-
   displayBudgetUi(budget);
 };
 
@@ -48,7 +61,6 @@ function ctrlAddItems() {
   if (input.value !== "" && !isNaN(input.value) && input.value > 0) {
     // Store data into the model
     const newItem = addItem(input);
-
     // addItem to the UI && DOM
     addListItem(newItem, input.type);
 
@@ -56,8 +68,10 @@ function ctrlAddItems() {
     clearFields();
 
     // update budget
-
     updateBudget();
+
+    // calculate and get percentage
+    updatePercentage();
   }
 }
 
@@ -73,5 +87,13 @@ const ctrlDeleteItem = event => {
     deleteItemUI(item);
     //Recalculate and show Budget
     updateBudget();
+    // calculate and get percentage
+    updatePercentage();
   }
+};
+
+const updatePercentage = () => {
+  calculatePercentage();
+  const percentages = getPercentage();
+  displayPercentage(percentages);
 };

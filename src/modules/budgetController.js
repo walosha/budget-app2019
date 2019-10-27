@@ -4,6 +4,13 @@ class Expense {
     this.description = description;
     this.value = value;
   }
+  calculatePercentage(totalIncome) {
+    this.percentage = Math.round((this.value / totalIncome) * 100);
+  }
+
+  getPercentage() {
+    return this.percentage;
+  }
 }
 class Income {
   constructor(id, description, value) {
@@ -78,3 +85,9 @@ export const deleteItem = (type, id) => {
 
   return data.allItems[type];
 };
+
+export const calculatePercentage = () =>
+  data.allItems.exp.map(item => item.calculatePercentage(data.total.inc));
+
+export const getPercentage = () =>
+  data.allItems.exp.map(item => item.getPercentage());

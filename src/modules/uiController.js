@@ -10,7 +10,9 @@ export const DOMString = {
   totalBudget: ".budget__value",
   totalIncome: ".budget__income--value",
   totalExpenses: ".budget__expenses--value",
-  totalExpensesPerctage: ".budget__expenses--percentage"
+  totalExpensesPerctage: ".budget__expenses--percentage",
+  percentageLable: ".item__percentage",
+  dateLabel: ".budget__title--month"
 };
 
 export const getInput = function() {
@@ -26,9 +28,14 @@ export const addListItem = function(obj, type) {
   let html, element;
   if (type === "inc") {
     html = `<div class="item clearfix" id="inc-${obj.id}">
-                              <div class="item__description">${obj.description}</div>
+                              <div class="item__description">${
+                                obj.description
+                              }</div>
                               <div class="right clearfix">
-                                  <div class="item__value">${obj.value}</div>
+                                  <div class="item__value">${formatNumber(
+                                    obj.value,
+                                    "inc"
+                                  )}</div>
                                   <div class="item__delete">
                                       <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
                                   </div>
@@ -37,9 +44,14 @@ export const addListItem = function(obj, type) {
     element = DOMString.incomeContainer;
   } else {
     html = `<div class="item clearfix" id="exp-${obj.id}">
-                            <div class="item__description">${obj.description}</div>
+                            <div class="item__description">${
+                              obj.description
+                            }</div>
                             <div class="right clearfix">
-                                <div class="item__value">-${obj.value}</div>
+                                <div class="item__value">${formatNumber(
+                                  obj.value,
+                                  "exp"
+                                )}</div>
                                 <div class="item__percentage">21%</div>
                                 <div class="item__delete">
                                     <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
@@ -66,9 +78,22 @@ export const clearFields = function() {
 
 export const displayBudgetUi = obj => {
   document.querySelector(DOMString.totalBudget).textContent = obj.budget;
-  document.querySelector(DOMString.totalIncome).textContent = obj.totalIncome;
-  document.querySelector(DOMString.totalExpenses).textContent =
-    obj.totalExpenses;
+
+  if (obj.budget > 0) {
+    document.querySelector(DOMString.totalBudget).textContent = formatNumber(
+      obj.budget,
+      "inc"
+    );
+  }
+
+  document.querySelector(DOMString.totalIncome).textContent = formatNumber(
+    obj.totalIncome,
+    "inc"
+  );
+  document.querySelector(DOMString.totalExpenses).textContent = formatNumber(
+    obj.totalExpenses,
+    "exp"
+  );
   if (obj.percentage < 1) {
     document.querySelector(DOMString.totalExpensesPerctage).textContent = "---";
   } else {
@@ -82,4 +107,40 @@ export const deleteItemUI = selectID => {
   document
     .querySelector(`#${selectID}`)
     .parentNode.removeChild(document.querySelector(`#${selectID}`));
+};
+
+export const displayPercentage = percentages => {
+  const nodeList = document.querySelectorAll(DOMString.percentageLable);
+  nodeList.forEach((node, index) => {
+    node.textContent = percentages[index];
+  });
+};
+
+function formatNumber(num, type) {
+  num = num.toFixed(2);
+  num = num.split(".");
+  let [int, dec] = num;
+  int = int.substr(0, int.length - 3) + "," + int.substr(int.length - 3, 3);
+  return type === "inc" ? "+" + int + "." + dec : "-" + int + "." + dec;
+}
+
+export function getDate() {
+  const now = new Date().toLocaleString("eng", {
+    year: "numeric",
+    month: "long"
+  });
+  document.querySelector(DOMString.dateLabel).textContent = now;
+}
+
+export const changeType = function() {
+  const nodeList = document.querySelectorAll(
+    DOMString.inputType +
+      "," +
+      DOMString.inputDescription +
+      "," +
+      DOMString.inputValue
+  );
+  nodeList.forEach(node => {
+    node.classList.toggle("red-focus");
+  });
 };
